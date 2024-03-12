@@ -28,6 +28,7 @@ public class CustomWebDriver {
         switch (BROWSER_NAME) {
             case "chrome" -> {
                 WebDriverManager.chromedriver().setup();
+                WebDriverManager.chromedriver().clearDriverCache().setup();
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("start-maximized");
                 threadLocal.set(new ChromeDriver(chromeOptions));
