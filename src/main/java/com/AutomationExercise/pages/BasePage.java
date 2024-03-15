@@ -16,11 +16,12 @@ public abstract class BasePage<T extends LoadableComponent<T>> extends LoadableC
 
     protected abstract String getPageUrl();
 
-    protected abstract void open();
+    protected abstract T open();
 
-    protected void openPage() {
+  /** open page and return instance of page **/
+    protected T openPage() {
         load();
-        this.get();
+        return this.get();
     }
 
     @Override

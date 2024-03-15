@@ -39,7 +39,7 @@ public class WaitHelper {
 
     public static void waitUntilVisibilityOfText(WebElement element) {
         try {
-            wait(arg0 -> !element.getText().isEmpty());
+            wait(CustomExpectedCondition.textToBeVisibility(element));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -47,7 +47,7 @@ public class WaitHelper {
 
     public static void waitUntilVisibilityTextOfElement(WebElement element, String text) {
         try {
-            new WebDriverWait(getDriver(), Duration.ofSeconds(TIME_OUT)).until(ExpectedConditions.textToBePresentInElement(element, text));
+            wait(ExpectedConditions.textToBePresentInElement(element, text));
         } catch (Exception e) {
             e.printStackTrace();
         }

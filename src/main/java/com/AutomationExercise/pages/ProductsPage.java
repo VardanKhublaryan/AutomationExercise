@@ -33,8 +33,8 @@ public class ProductsPage extends BasePage<ProductsPage> {
 
     // For Products button test see Home
     @Override
-    public void open() {
-        super.openPage();
+    public ProductsPage open() {
+        return super.openPage();
     }
 
     @Override

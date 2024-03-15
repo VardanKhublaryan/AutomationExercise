@@ -20,7 +20,6 @@ public class CustomExpectedCondition {
         };
     }
 
-
     public static ExpectedCondition<Boolean> waitForJStoLoad() {
         return driver -> ((JavascriptExecutor) getDriver()).executeScript("return document.readyState").toString()
                 .equals("complete");

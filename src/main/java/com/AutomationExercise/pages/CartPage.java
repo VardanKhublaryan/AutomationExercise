@@ -58,8 +58,8 @@ public class CartPage extends BasePage<CartPage> {
 
     // For cart button test see Home
     @Override
-    public void open() {
-        super.openPage();
+    public CartPage open() {
+       return super.openPage();
     }
 
     @Override

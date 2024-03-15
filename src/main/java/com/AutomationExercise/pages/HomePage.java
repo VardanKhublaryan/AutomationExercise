@@ -38,8 +38,8 @@ public class HomePage extends BasePage<HomePage> {
     }
 
     @Override
-    public void open() {
-        super.openPage();
+    public HomePage open() {
+        return super.openPage();
     }
 
     @Override

@@ -7,8 +7,8 @@
 
 
     <test name="TestSuite" >
+        <parameter name="browser" value="safari"/>
         <classes>
-
             <class name="Products"/>
             <class name="RegistrationLogin"/>
             <class name="Cart"/>

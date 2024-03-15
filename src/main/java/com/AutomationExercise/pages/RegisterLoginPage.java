@@ -98,8 +98,8 @@ public class RegisterLoginPage extends BasePage<RegisterLoginPage> {
 
     // For signUpLogin button test see Home
     @Override
-    public void open() {
-        super.openPage();
+    public RegisterLoginPage open() {
+        return super.openPage();
     }
 
     @Override
