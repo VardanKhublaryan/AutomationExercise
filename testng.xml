@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="AutomationExercises" parallel="instances" thread-count="1" annotations="JDK">
+<suite name="AutomationExercises" parallel="instances" thread-count="3" annotations="JDK">
 
     <listeners>
         <listener class-name="com.AutomationExercise.utils.CustomListener"/>
@@ -7,7 +7,7 @@
 
 
     <test name="TestSuite" >
-        <parameter name="browser" value="safari"/>
+        <parameter name="browser" value="chrome"/>
         <classes>
             <class name="Products"/>
             <class name="RegistrationLogin"/>
@@ -15,4 +15,13 @@
             <class name="Home"/>
         </classes>
     </test>
+<!--    <test name="TestSuite1" >-->
+<!--        <parameter name="browser" value="firefox"/>-->
+<!--        <classes>-->
+<!--            <class name="Products"/>-->
+<!--            <class name="RegistrationLogin"/>-->
+<!--            <class name="Cart"/>-->
+<!--            <class name="Home"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 </suite>

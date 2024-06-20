@@ -2,12 +2,24 @@ import com.AutomationExercise.pages.HomePage;
 import com.AutomationExercise.utils.CustomWebDriver;
 import com.AutomationExercise.utils.CustomWebElement;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.Platform;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.http.ClientConfig;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
 import org.testng.annotations.*;
+
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.time.Duration;
 
 import static com.AutomationExercise.utils.CustomWebDriver.getDriver;
 import static com.AutomationExercise.utils.CustomWebDriver.removeDriverThreadLocal;
@@ -18,14 +30,16 @@ public class BaseTest {
  else working @Optional("chrome") */
     @BeforeMethod()
     @Parameters({"browser"})
-    public void setUp(@Optional("chrome") String browser) {
+    public void setUp(@Optional("chrome") String browser) throws MalformedURLException {
         switch (browser) {
             case "chrome" -> {
-                WebDriverManager.chromedriver().setup();
-                WebDriverManager.chromedriver().clearDriverCache().setup();
-                ChromeOptions chromeOptions = new ChromeOptions();
-                chromeOptions.addArguments("start-maximized");
-                CustomWebDriver.threadLocal.set(new ChromeDriver(chromeOptions));
+//                WebDriverManager.chromedriver().setup();
+//                WebDriverManager.chromedriver().clearDriverCache().setup();
+                final DesiredCapabilities capabilities = new DesiredCapabilities();
+                capabilities.setPlatform(Platform.WIN11);
+                capabilities.setBrowserName("chrome");
+                RemoteWebDriver driver = new RemoteWebDriver(new URL("http://192.168.1.137:4444"),capabilities);
+                CustomWebDriver.threadLocal.set(driver);
             }
             case "safari" -> {
                 WebDriverManager.safaridriver().setup();
@@ -33,8 +47,12 @@ public class BaseTest {
                 CustomWebDriver.threadLocal.set(new SafariDriver(safariOptions));
             }
             case "firefox" -> {
-                System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver.exe");
-                CustomWebDriver.threadLocal.set(new FirefoxDriver());
+                final DesiredCapabilities capabilities = new DesiredCapabilities();
+                capabilities.setPlatform(Platform.WIN11);
+                capabilities.setBrowserName("firefox");
+
+                RemoteWebDriver driver = new RemoteWebDriver(new URL("http://192.168.1.137:4444"),capabilities);
+                CustomWebDriver.threadLocal.set(driver);
             }
             default -> CustomWebElement.printInfo("WRONG BROWSER NAME");
         }
