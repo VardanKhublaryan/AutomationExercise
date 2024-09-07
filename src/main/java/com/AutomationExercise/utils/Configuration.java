@@ -11,6 +11,7 @@ public class Configuration {
     public static final String REGISTER_LOGIN_URL = getPropValues("register_login_url");
     public static final String PRODUCTS_PAGE_URL = getPropValues("products_url");
     public static final String CART_PAGE_URL = getPropValues("cart_url");
+    public static final Boolean REMOTE_RUN = Boolean.valueOf(getPropValues("remote_run"));
 
 
     private static Properties getPropValues() throws IOException {

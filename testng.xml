@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="AutomationExercises" parallel="instances" thread-count="3" annotations="JDK">
+<suite name="AutomationExercises" parallel="instances" thread-count="2" annotations="JDK">
 
     <listeners>
         <listener class-name="com.AutomationExercise.utils.CustomListener"/>

@@ -7,6 +7,7 @@ import org.testng.asserts.SoftAssert;
 import static com.AutomationExercise.utils.Configuration.*;
 import static com.AutomationExercise.utils.CustomWebDriver.getDriver;
 
+
 public class Home extends BaseTest {
     @Test
     public void pageScroll() {

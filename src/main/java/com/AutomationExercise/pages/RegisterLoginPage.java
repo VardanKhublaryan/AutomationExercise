@@ -1,7 +1,7 @@
 package com.AutomationExercise.pages;
 
 //import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.RandomStringUtils;
+//import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -124,9 +124,9 @@ public class RegisterLoginPage extends BasePage<RegisterLoginPage> {
     public String randomEmail() {
         String allowedChars = "abcdefghijklmnopqrstuvwxyz" + "1234567890" + "_-.";
         String email;
-        String temp = RandomStringUtils.random(10, allowedChars);
-        email = temp + "@testdata.com";
-        return email;
+//        String temp = RandomStringUtils.random(10, allowedChars);
+//        email = temp + "@testdata.com";
+        return "dtfgyhukjlk@testdata.com";
     }
 
     public void sinUp(String name, String email) {
