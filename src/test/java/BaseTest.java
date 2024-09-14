@@ -35,13 +35,8 @@ public class BaseTest {
         switch (browser) {
             case "chrome" -> {
                 WebDriver driver;
-//                WebDriverManager.chromedriver().setup();
-//                WebDriverManager.chromedriver().clearDriverCache().setup();
-
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--start-maximized");
-//                chromeOptions.setBrowserVersion("126");
-
                 DesiredCapabilities capabilities = new DesiredCapabilities();
                 capabilities.setCapability(CapabilityType.PLATFORM_NAME, Platform.WINDOWS.name());
                 capabilities.setCapability(CapabilityType.BROWSER_NAME, Browser.CHROME.browserName());
@@ -53,7 +48,6 @@ public class BaseTest {
                 CustomWebDriver.threadLocal.set(driver);
             }
             case "safari" -> {
-//                WebDriverManager.safaridriver().setup();
                 SafariOptions safariOptions = new SafariOptions();
                 CustomWebDriver.threadLocal.set(new SafariDriver(safariOptions));
             }
