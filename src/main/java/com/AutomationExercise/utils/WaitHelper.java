@@ -32,7 +32,7 @@ public class WaitHelper {
         try {
             waitUntilJSisLoaded();
         } catch (WebDriverException e) {
-            e.printStackTrace();
+            CustomListener.log(e.toString());
             throw new WebDriverException("Page is not loaded");
         }
     }
@@ -41,7 +41,7 @@ public class WaitHelper {
         try {
             wait(CustomExpectedCondition.textToBeVisibility(element));
         } catch (Exception e) {
-            e.printStackTrace();
+            CustomListener.log(e.toString());
         }
     }
 
@@ -49,7 +49,7 @@ public class WaitHelper {
         try {
             wait(ExpectedConditions.textToBePresentInElement(element, text));
         } catch (Exception e) {
-            e.printStackTrace();
+            CustomListener.log(e.toString());
         }
     }
 
@@ -57,7 +57,7 @@ public class WaitHelper {
         try {
             new WebDriverWait(getDriver(), Duration.ofSeconds(TIME_OUT)).until(ExpectedConditions.visibilityOf(element));
         } catch (WebDriverException e) {
-            e.printStackTrace();
+            CustomListener.log(e.toString());
             throw new WebDriverException("Element by " + element + " selector should not be visible");
         }
     }
