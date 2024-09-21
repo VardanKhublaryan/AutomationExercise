@@ -1,6 +1,6 @@
 package com.AutomationExercise.pages;
 
-import org.openqa.selenium.WebDriver;
+import com.AutomationExercise.utils.CustomWebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -46,9 +46,9 @@ public class CartPage extends BasePage<CartPage> {
     @FindBy(css = "[href='/view_cart']")
     private WebElement viewCart;
 
-    public CartPage(WebDriver driver) {
-        super(driver);
-        PageFactory.initElements(driver, this);
+    public CartPage() {
+        super(CustomWebDriver.getDriver());
+        PageFactory.initElements(CustomWebDriver.getDriver(), this);
     }
 
     @Override
@@ -59,7 +59,12 @@ public class CartPage extends BasePage<CartPage> {
     // For cart button test see Home
     @Override
     public CartPage open() {
-       return super.openPage();
+        return super.openPage(CartPage.class);
+    }
+
+    @Override
+    protected CartPage init() {
+        return super.initPage(CartPage.class);
     }
 
     @Override

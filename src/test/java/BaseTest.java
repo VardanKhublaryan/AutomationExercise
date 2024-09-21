@@ -61,7 +61,7 @@ public class BaseTest {
             }
             default -> CustomWebElement.printInfo("WRONG BROWSER NAME");
         }
-        HomePage homePage = new HomePage(getDriver());
+        HomePage homePage = new HomePage();
         homePage.open();
     }
 

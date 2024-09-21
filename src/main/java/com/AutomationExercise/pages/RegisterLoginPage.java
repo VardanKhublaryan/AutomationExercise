@@ -2,7 +2,8 @@ package com.AutomationExercise.pages;
 
 //import org.apache.commons.lang3.RandomStringUtils;
 //import org.apache.commons.lang3.RandomStringUtils;
-import org.openqa.selenium.WebDriver;
+
+import com.AutomationExercise.utils.CustomWebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -87,9 +88,9 @@ public class RegisterLoginPage extends BasePage<RegisterLoginPage> {
     @FindBy(css = "[data-qa='login-button']")
     private WebElement loginButton;
 
-    public RegisterLoginPage(WebDriver driver) {
-        super(driver);
-        PageFactory.initElements(driver, this);
+    public RegisterLoginPage() {
+        super(CustomWebDriver.getDriver());
+        PageFactory.initElements(CustomWebDriver.getDriver(), this);
     }
 
     @Override
@@ -100,7 +101,12 @@ public class RegisterLoginPage extends BasePage<RegisterLoginPage> {
     // For signUpLogin button test see Home
     @Override
     public RegisterLoginPage open() {
-        return super.openPage();
+        return super.openPage(RegisterLoginPage.class);
+    }
+
+    @Override
+    protected RegisterLoginPage init() {
+        return super.initPage(RegisterLoginPage.class);
     }
 
     @Override

@@ -15,14 +15,14 @@ public class Products extends BaseTest {
     @BeforeMethod
     public void goToProductsPage() {
         Random random = new Random();
-        index = random.nextInt(0, new HomePage(getDriver()).getItemNamesSize());
-        itemNameInHomePage = new HomePage(getDriver()).getTextItemInHomePage(index);
-        new ProductsPage(getDriver()).open();
+        index = random.nextInt(0, new HomePage().getItemNamesSize());
+        itemNameInHomePage = new HomePage().getTextItemInHomePage(index);
+        new ProductsPage().open();
     }
 
     @Test
     public void searchProduct() {
-        ProductsPage productsPage = new ProductsPage(getDriver());
+        ProductsPage productsPage = new ProductsPage();
         productsPage.search(itemNameInHomePage);
         Assert.assertEquals(itemNameInHomePage, productsPage.getItemNameInProducts());
     }

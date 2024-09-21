@@ -12,7 +12,7 @@ public class Home extends BaseTest {
     @Test
     public void pageScroll() {
         SoftAssert softAssert = new SoftAssert();
-        HomePage homePage = new HomePage(getDriver());
+        HomePage homePage = new HomePage();
         JavascriptHelper.scrollDown();
         long scrollDownPosition = JavascriptHelper.getScrollPosition();
         homePage.clickScrollUpBtn();
@@ -25,19 +25,19 @@ public class Home extends BaseTest {
 
     @Test
     public void goToProductsFromHeader() {
-        new HomePage(getDriver()).getHeader().clickProductsBtn();
+        new HomePage().getHeader().clickProductsBtn();
         Assert.assertEquals(getDriver().getCurrentUrl(), PRODUCTS_PAGE_URL);
     }
 
     @Test
     public void goToCartFromHeader() {
-        new HomePage(getDriver()).getHeader().clickCartButton();
+        new HomePage().getHeader().clickCartButton();
         Assert.assertEquals(getDriver().getCurrentUrl(), CART_PAGE_URL);
     }
 
     @Test
     public void goToCSignupLoginFromHeader() {
-        new HomePage(getDriver()).getHeader().clickSignupLoginBtn();
+        new HomePage().getHeader().clickSignupLoginBtn();
         Assert.assertEquals(getDriver().getCurrentUrl(), REGISTER_LOGIN_URL);
     }
 }

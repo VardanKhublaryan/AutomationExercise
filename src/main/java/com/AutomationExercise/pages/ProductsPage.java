@@ -1,6 +1,6 @@
 package com.AutomationExercise.pages;
 
-import org.openqa.selenium.WebDriver;
+import com.AutomationExercise.utils.CustomWebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -21,9 +21,9 @@ public class ProductsPage extends BasePage<ProductsPage> {
     private WebElement itemsNamesProductsPage;
 
 
-    public ProductsPage(WebDriver driver) {
-        super(driver);
-        PageFactory.initElements(driver, this);
+    public ProductsPage() {
+        super(CustomWebDriver.getDriver());
+        PageFactory.initElements(CustomWebDriver.getDriver(), this);
     }
 
     @Override
@@ -34,8 +34,14 @@ public class ProductsPage extends BasePage<ProductsPage> {
     // For Products button test see Home
     @Override
     public ProductsPage open() {
-        return super.openPage();
+        return super.openPage(ProductsPage.class);
     }
+
+    @Override
+    protected ProductsPage init() {
+        return super.initPage(ProductsPage.class);
+    }
+
 
     @Override
     public void isLoaded() throws Error {

@@ -14,7 +14,7 @@ public class Cart extends BaseTest {
 
     @BeforeMethod
     public void goToCartPage() {
-        RegisterLoginPage loginPage = new RegisterLoginPage(getDriver());
+        RegisterLoginPage loginPage = new RegisterLoginPage();
         loginPage.open();
         loginPage.login(UserDetails.EMAIL.getValue(), UserDetails.PASSWORD.getValue());
     }
@@ -22,11 +22,11 @@ public class Cart extends BaseTest {
     @Test
     public void createOrder() {
         SoftAssert softAssert = new SoftAssert();
-        HomePage homePage = new HomePage(getDriver());
+        HomePage homePage = new HomePage();
         String itemName = homePage.getTextItemInHomePage(0);
         String itemPrice = homePage.getItemPrice(0);
         homePage.clickAddToCartButton();
-        CartPage cartPage = new CartPage(getDriver());
+        CartPage cartPage = new CartPage();
         cartPage.clickViewCartButton();
         cartPage.clickProceedToCheckout();
         softAssert.assertEquals(itemName, cartPage.getItemNameInCartPage());
@@ -40,7 +40,7 @@ public class Cart extends BaseTest {
         cartPage.payAndConfirm(UserDetails.CART_NAME.getValue(), UserDetails.CART_NUMBER.getValue(), UserDetails.CVC.getValue()
                 , UserDetails.CART_EXPIRATION_MONTH.getValue(), UserDetails.CART_EXPIRATION_YEAR.getValue());
         getDriver().navigate().back();
-        softAssert.assertTrue(new CartPage(getDriver()).messageSuccessIsDisplayed());
+        softAssert.assertTrue(new CartPage().messageSuccessIsDisplayed());
         softAssert.assertAll();
     }
 }

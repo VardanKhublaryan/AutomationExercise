@@ -1,6 +1,6 @@
 package com.AutomationExercise.pages;
 
-import org.openqa.selenium.WebDriver;
+import com.AutomationExercise.utils.CustomWebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -27,9 +27,9 @@ public class HomePage extends BasePage<HomePage> {
     @FindBy(css = "[class='item active']")
     private WebElement carouselLinerSlide;
 
-    public HomePage(WebDriver driver) {
-        super(driver);
-        PageFactory.initElements(driver, this);
+    public HomePage() {
+        super(CustomWebDriver.getDriver());
+        PageFactory.initElements(CustomWebDriver.getDriver(), this);
     }
 
     @Override
@@ -39,7 +39,12 @@ public class HomePage extends BasePage<HomePage> {
 
     @Override
     public HomePage open() {
-        return super.openPage();
+        return super.openPage(HomePage.class);
+    }
+
+    @Override
+    protected HomePage init() {
+        return super.initPage(HomePage.class);
     }
 
     @Override

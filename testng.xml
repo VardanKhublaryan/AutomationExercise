@@ -15,13 +15,4 @@
             <class name="Home"/>
         </classes>
     </test>
-<!--    <test name="TestSuite1" >-->
-<!--        <parameter name="browser" value="firefox"/>-->
-<!--        <classes>-->
-<!--            <class name="Products"/>-->
-<!--            <class name="RegistrationLogin"/>-->
-<!--            <class name="Cart"/>-->
-<!--            <class name="Home"/>-->
-<!--        </classes>-->
-<!--    </test>-->
 </suite>

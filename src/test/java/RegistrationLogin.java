@@ -13,13 +13,13 @@ public class RegistrationLogin extends BaseTest {
 
     @BeforeMethod
     public void goToLoginPage() {
-        RegisterLoginPage registerPage = new RegisterLoginPage(getDriver());
+        RegisterLoginPage registerPage = new RegisterLoginPage();
         registerPage.open();
     }
 
     @Test
     public void validSignUp() {
-        RegisterLoginPage registerPage = new RegisterLoginPage(getDriver());
+        RegisterLoginPage registerPage = new RegisterLoginPage();
         softAssert = new SoftAssert();
         softAssert.assertEquals(registerPage.getSignUpText(), "New User Signup!");
         registerPage.sinUp(NAME.getValue(), registerPage.randomEmail());
@@ -38,7 +38,7 @@ public class RegistrationLogin extends BaseTest {
 
     @Test
     public void validLogin() {
-        RegisterLoginPage loginPage = new RegisterLoginPage(getDriver());
+        RegisterLoginPage loginPage = new RegisterLoginPage();
         loginPage.login(UserDetails.EMAIL.getValue(), UserDetails.PASSWORD.getValue());
         Assert.assertTrue(loginPage.getLoggedUserText().contains("Logged in as " + NAME.getValue()));
     }

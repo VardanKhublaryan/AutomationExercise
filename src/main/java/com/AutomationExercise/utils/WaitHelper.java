@@ -1,6 +1,5 @@
 package com.AutomationExercise.utils;
 
-import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -9,7 +8,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-import static com.AutomationExercise.utils.CustomExpectedCondition.*;
+import static com.AutomationExercise.utils.CustomExpectedCondition.waitForJQueryToLoad;
+import static com.AutomationExercise.utils.CustomExpectedCondition.waitForJStoLoad;
 import static com.AutomationExercise.utils.CustomWebDriver.getDriver;
 
 public class WaitHelper {
