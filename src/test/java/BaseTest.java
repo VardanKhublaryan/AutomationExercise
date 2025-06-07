@@ -1,23 +1,23 @@
 import com.AutomationExercise.pages.HomePage;
 import com.AutomationExercise.utils.CustomWebDriver;
 import com.AutomationExercise.utils.CustomWebElement;
-
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.*;
-import org.openqa.selenium.remote.http.ClientConfig;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 
 import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.AutomationExercise.utils.Configuration.REMOTE_RUN;
 import static com.AutomationExercise.utils.CustomWebDriver.getDriver;
@@ -35,16 +35,11 @@ public class BaseTest {
         switch (browser) {
             case "chrome" -> {
                 WebDriver driver;
-                ChromeOptions chromeOptions = new ChromeOptions();
-                chromeOptions.addArguments("--start-maximized");
-                DesiredCapabilities capabilities = new DesiredCapabilities();
-                capabilities.setCapability(CapabilityType.PLATFORM_NAME, Platform.WINDOWS.name());
-                capabilities.setCapability(CapabilityType.BROWSER_NAME, Browser.CHROME.browserName());
+                ChromeOptions options = getChromeOptions();
                 if (REMOTE_RUN) {
-                    driver = new RemoteWebDriver(new URL("http://192.168.1.137:4444"),capabilities);
+                    driver = new RemoteWebDriver(new URL("http://192.168.1.137:4444"), options);
                     CustomWebDriver.threadLocal.set(driver);
-                }
-                else driver = new ChromeDriver();
+                } else driver = new ChromeDriver(options);
                 CustomWebDriver.threadLocal.set(driver);
             }
             case "safari" -> {
@@ -63,6 +58,20 @@ public class BaseTest {
         }
         HomePage homePage = new HomePage();
         homePage.open();
+    }
+
+    private static ChromeOptions getChromeOptions() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--start-maximized");
+        options.addArguments("--disable-web-security");
+        options.addArguments("--no-proxy-server");
+
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("credentials_enable_service", false);
+        prefs.put("profile.password_manager_enabled", false);
+
+        options.setExperimentalOption("prefs", prefs);
+        return options;
     }
 
     @AfterMethod()

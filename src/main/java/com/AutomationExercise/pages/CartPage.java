@@ -3,6 +3,7 @@ package com.AutomationExercise.pages;
 import com.AutomationExercise.utils.CustomWebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public class CartPage extends BasePage<CartPage> {
     @FindBy(id = "success_message")
     private WebElement messageSuccesses;
     @FindBy(css = "[href='/view_cart']")
-    private WebElement viewCart;
+    private List<WebElement> viewCart;
 
     public CartPage() {
         super(CustomWebDriver.getDriver());
@@ -78,7 +79,7 @@ public class CartPage extends BasePage<CartPage> {
     }
 
     public void clickViewCartButton() {
-        click(viewCart);
+        click(viewCart.get(1));
     }
 
     public void clickProceedToCheckout() {

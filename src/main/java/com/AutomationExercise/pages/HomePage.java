@@ -1,6 +1,7 @@
 package com.AutomationExercise.pages;
 
 import com.AutomationExercise.utils.CustomWebDriver;
+import com.AutomationExercise.utils.JavascriptHelper;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -70,6 +71,7 @@ public class HomePage extends BasePage<HomePage> {
     }
 
     public void clickAddToCartButton() {
+        JavascriptHelper.scrollDown();
         click(addToCartBtn);
     }
 

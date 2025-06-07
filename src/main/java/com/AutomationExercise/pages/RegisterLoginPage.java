@@ -8,10 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.AutomationExercise.utils.Configuration.REGISTER_LOGIN_URL;
 import static com.AutomationExercise.utils.CustomWebElement.*;
@@ -128,11 +126,7 @@ public class RegisterLoginPage extends BasePage<RegisterLoginPage> {
     }
 
     public String randomEmail() {
-        String allowedChars = "abcdefghijklmnopqrstuvwxyz" + "1234567890" + "_-.";
-        String email;
-//        String temp = RandomStringUtils.random(10, allowedChars);
-//        email = temp + "@testdata.com";
-        return "dtfgyhukjlk@testdata.com";
+        return "user_" + UUID.randomUUID().toString().substring(0, 8) + "@example.com";
     }
 
     public void sinUp(String name, String email) {
@@ -156,6 +150,12 @@ public class RegisterLoginPage extends BasePage<RegisterLoginPage> {
         fill(this.zipcode, zipcode);
         fill(this.mobile_number, mobileNumber);
         click(createAccountBtn);
+    }
+
+    public static List<WebElement> filterList(List<WebElement> list) {
+        return list.stream()
+                .filter(element -> getText(element).matches(".*\\d$"))
+                .collect(Collectors.toList());
     }
 
     public void clickOnContinueBtn() {
