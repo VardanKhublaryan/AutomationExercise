@@ -24,15 +24,9 @@ public class Header {
     @Autowired
     private CustomWebElement customWebElement;
 
-    @Autowired
-    private CustomWebDriver customWebDriver;
-
-    public Header() {
-    }
-
     @PostConstruct
     public void initPage() {
-        PageFactory.initElements(customWebDriver.getDriver(), this);
+        PageFactory.initElements(CustomWebDriver.getDriver(), this);
     }
 
     public void clickProductsBtn() {

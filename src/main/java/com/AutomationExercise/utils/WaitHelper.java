@@ -15,17 +15,15 @@ import java.time.Duration;
 @Component
 @Scope("prototype")
 public class WaitHelper {
+
     public static final int TIME_OUT = 7;
     private WebDriverWait wait;
-
-    @Autowired
-    private CustomWebDriver customWebDriver;
 
     @Autowired
     private CustomExpectedCondition expectedCondition;
 
      void wait(ExpectedCondition<Boolean> expectedCondition) throws WebDriverException {
-        new WebDriverWait(customWebDriver.getDriver(), Duration.ofSeconds(TIME_OUT)).until(expectedCondition);
+        new WebDriverWait(CustomWebDriver.getDriver(), Duration.ofSeconds(TIME_OUT)).until(expectedCondition);
     }
 
     public  void waitUntilJQueryIsLoaded() {
@@ -63,7 +61,7 @@ public class WaitHelper {
 
     public void elementToBeVisible(WebElement element) {
         try {
-            new WebDriverWait(customWebDriver.getDriver(), Duration.ofSeconds(TIME_OUT)).until(ExpectedConditions.visibilityOf(element));
+            new WebDriverWait(CustomWebDriver.getDriver(), Duration.ofSeconds(TIME_OUT)).until(ExpectedConditions.visibilityOf(element));
         } catch (WebDriverException e) {
             CustomListener.log(e.toString());
             throw new WebDriverException("Element by " + element + " selector should not be visible");
@@ -71,13 +69,13 @@ public class WaitHelper {
     }
 
     public void waitUntilElementClickable(WebElement element) {
-        wait = new WebDriverWait(customWebDriver.getDriver(), Duration.ofSeconds(TIME_OUT));
+        wait = new WebDriverWait(CustomWebDriver.getDriver(), Duration.ofSeconds(TIME_OUT));
         elementToBeVisible(element);
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
     public void waitUntilElementIsDisplayed(WebElement element) {
-        new WebDriverWait(customWebDriver.getDriver(), Duration.ofSeconds(TIME_OUT)).until(ExpectedConditions.visibilityOf(element));
+        new WebDriverWait(CustomWebDriver.getDriver(), Duration.ofSeconds(TIME_OUT)).until(ExpectedConditions.visibilityOf(element));
     }
 
 }

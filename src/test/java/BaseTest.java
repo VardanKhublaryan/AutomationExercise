@@ -25,14 +25,14 @@ public class BaseTest extends AbstractTestNGSpringContextTests {
     @SneakyThrows
     @BeforeClass()
     public void setUp() {
-        customWebDriver.setUp();
+        CustomWebDriver.setUp();
         homePage.open();
     }
 
     @AfterClass()
     public void treeUp() {
-        if (customWebDriver.getDriver() != null) {
-            customWebDriver.getDriver().quit();
+        if (CustomWebDriver.getDriver() != null) {
+            CustomWebDriver.getDriver().quit();
             customWebDriver.removeDriverThreadLocal();
         }
     }

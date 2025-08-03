@@ -1,26 +1,34 @@
+import com.AutomationExercise.SpringApp;
 import com.AutomationExercise.constants.UserDetails;
 import com.AutomationExercise.pages.CartPage;
 import com.AutomationExercise.pages.HomePage;
 import com.AutomationExercise.pages.RegisterLoginPage;
 import com.AutomationExercise.utils.CustomWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.testng.annotations.BeforeMethod;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+@SpringBootTest(classes = SpringApp.class)
 public class Cart extends BaseTest {
 
     @Autowired
     private HomePage homePage;
 
     @Autowired
+    private CartPage cartPage;
+
+    @Autowired
     private CustomWebDriver customWebDriver;
 
-    @BeforeMethod
+    @Autowired
+    private  RegisterLoginPage registerLoginPage;
+
+    @BeforeClass
     public void goToCartPage() {
-        RegisterLoginPage loginPage = new RegisterLoginPage();
-        loginPage.open();
-        loginPage.login(UserDetails.EMAIL.getValue(), UserDetails.PASSWORD.getValue());
+        registerLoginPage.open();
+        registerLoginPage.login(UserDetails.EMAIL.getValue(), UserDetails.PASSWORD.getValue());
     }
 
     @Test
@@ -29,7 +37,6 @@ public class Cart extends BaseTest {
         String itemName = homePage.getTextItemInHomePage(0);
         String itemPrice = homePage.getItemPrice(0);
         homePage.clickAddToCartButton();
-        CartPage cartPage = new CartPage();
         cartPage.clickViewCartButton();
         cartPage.clickProceedToCheckout();
         softAssert.assertEquals(itemName, cartPage.getItemNameInCartPage());
@@ -42,8 +49,8 @@ public class Cart extends BaseTest {
         cartPage.clickPlaceOrderBtn();
         cartPage.payAndConfirm(UserDetails.CART_NAME.getValue(), UserDetails.CART_NUMBER.getValue(), UserDetails.CVC.getValue()
                 , UserDetails.CART_EXPIRATION_MONTH.getValue(), UserDetails.CART_EXPIRATION_YEAR.getValue());
-        customWebDriver.getDriver().navigate().back();
-        softAssert.assertTrue(new CartPage().messageSuccessIsDisplayed());
+        CustomWebDriver.getDriver().navigate().back();
+        softAssert.assertTrue(cartPage.messageSuccessIsDisplayed());
         softAssert.assertAll();
     }
 }

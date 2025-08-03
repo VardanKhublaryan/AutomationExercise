@@ -35,7 +35,7 @@ public class CustomListener implements ITestListener {
 
         Screenshot screenshot1;
         screenshot1 = new AShot().coordsProvider(new WebDriverCoordsProvider()).
-                takeScreenshot(customWebDriver.getDriver());
+                takeScreenshot(CustomWebDriver.getDriver());
         BufferedImage randomImageItem1 = screenshot1.getImage();
         File file = new File("ScreenShots" + "bug" + fileNum + ".png");
         try {

@@ -42,18 +42,19 @@ public class Home extends BaseTest {
     @Test
     public void goToProductsFromHeader() {
         header.clickProductsBtn();
-        Assert.assertEquals(custgetDriver.getDriver().getCurrentUrl(), PRODUCTS_PAGE_URL);
+        Assert.assertEquals(CustomWebDriver.getDriver().getCurrentUrl(), PRODUCTS_PAGE_URL);
     }
 
     @Test
     public void goToCartFromHeader() {
         header.clickCartButton();
-        Assert.assertEquals(custgetDriver.getDriver().getCurrentUrl(), CART_PAGE_URL);
+        Assert.assertEquals(CustomWebDriver.getDriver().getCurrentUrl(), CART_PAGE_URL);
     }
 
     @Test
     public void goToCSignupLoginFromHeader() {
         header.clickSignupLoginBtn();
-        Assert.assertEquals(custgetDriver.getDriver().getCurrentUrl(), REGISTER_LOGIN_URL);
+        Assert.assertEquals(CustomWebDriver.getDriver().getCurrentUrl(), REGISTER_LOGIN_URL);
     }
+
 }

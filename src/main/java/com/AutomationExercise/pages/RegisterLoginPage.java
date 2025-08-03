@@ -1,23 +1,21 @@
 package com.AutomationExercise.pages;
 
-//import org.apache.commons.lang3.RandomStringUtils;
-//import org.apache.commons.lang3.RandomStringUtils;
-
 import com.AutomationExercise.utils.CustomWebDriver;
 import com.AutomationExercise.utils.CustomWebElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.AutomationExercise.utils.Configuration.REGISTER_LOGIN_URL;
-import static com.AutomationExercise.utils.CustomWebElement.*;
 
+@Component
+@Scope("prototype")
 public class RegisterLoginPage extends BasePage<RegisterLoginPage> {
-
 
     @FindBy(css = "[href='/login']")
     private WebElement signupLoginButton;
@@ -89,15 +87,10 @@ public class RegisterLoginPage extends BasePage<RegisterLoginPage> {
     private WebElement loginButton;
 
     @Autowired
-    private CustomWebDriver customWebDriver;
-
-    @Autowired
     private CustomWebElement customWebElement;
 
-
-    public RegisterLoginPage() {
-        super();
-        PageFactory.initElements(customWebDriver.getDriver(), this);
+    public void deleteCookies() {
+        CustomWebDriver.getDriver().manage().deleteAllCookies();
     }
 
     @Override
@@ -161,7 +154,7 @@ public class RegisterLoginPage extends BasePage<RegisterLoginPage> {
         customWebElement.click(createAccountBtn);
     }
 
-    public  List<WebElement> filterList(List<WebElement> list) {
+    public List<WebElement> filterList(List<WebElement> list) {
         return list.stream()
                 .filter(element -> customWebElement.getText(element).matches(".*\\d$"))
                 .collect(Collectors.toList());

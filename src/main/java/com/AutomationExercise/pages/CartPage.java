@@ -4,16 +4,18 @@ import com.AutomationExercise.utils.CustomWebDriver;
 import com.AutomationExercise.utils.CustomWebElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.FindBys;
-import org.openqa.selenium.support.PageFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 import static com.AutomationExercise.utils.Configuration.CART_PAGE_URL;
-import static com.AutomationExercise.utils.CustomWebElement.*;
 
+@Component
+@Scope("prototype")
 public class CartPage extends BasePage<CartPage> {
+
     @FindBy(css = "[class='btn btn-default check_out']")
     private WebElement proceedToCheckout;
     @FindBy(css = "td.cart_description>h4")
@@ -50,15 +52,7 @@ public class CartPage extends BasePage<CartPage> {
     private List<WebElement> viewCart;
 
     @Autowired
-    private CustomWebDriver customWebDriver;
-
-    @Autowired
     private CustomWebElement customWebElement;
-
-    public CartPage() {
-        super();
-        PageFactory.initElements(customWebDriver.getDriver(), this);
-    }
 
     @Override
     protected String getPageUrl() {

@@ -6,18 +6,16 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.AutomationExercise.utils.Configuration.REMOTE_RUN;
 
-@Configuration
-@Scope("singleton")
+@Service
 public class CustomWebDriver {
     public static ThreadLocal<WebDriver> threadLocal = new ThreadLocal<>();
 
@@ -25,7 +23,8 @@ public class CustomWebDriver {
         threadLocal.remove();
     }
 
-    public void setUp() throws MalformedURLException {
+    @SneakyThrows
+    public static void setUp() {
         if (threadLocal.get() == null) {
             WebDriver driver;
             ChromeOptions options = getChromeOptions();
@@ -54,7 +53,10 @@ public class CustomWebDriver {
     @SneakyThrows
     @Bean
     @Scope("prototype")
-    public WebDriver getDriver() {
+    public static WebDriver getDriver() {
+        if (threadLocal.get() == null) {
+            setUp();
+        }
         return threadLocal.get();
     }
 

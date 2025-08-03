@@ -1,12 +1,9 @@
 package com.AutomationExercise.pages;
 
-import com.AutomationExercise.utils.CustomWebDriver;
 import com.AutomationExercise.utils.CustomWebElement;
 import com.AutomationExercise.utils.JavascriptHelper;
-import jakarta.annotation.PostConstruct;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -34,23 +31,12 @@ public class HomePage extends BasePage<HomePage> {
     @FindBy(css = "[class='item active']")
     private WebElement carouselLinerSlide;
 
-    @Autowired
-    private CustomWebDriver customWebDriver;
 
     @Autowired
     private CustomWebElement customWebElement;
 
     @Autowired
     private JavascriptHelper javascriptHelper;
-
-    public HomePage() {
-        super();
-    }
-
-    @PostConstruct
-    public void initPage() {
-        PageFactory.initElements(customWebDriver.getDriver(), this);
-    }
 
     @Override
     protected String getPageUrl() {

@@ -4,13 +4,16 @@ import com.AutomationExercise.utils.CustomWebDriver;
 import com.AutomationExercise.utils.CustomWebElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import static com.AutomationExercise.utils.Configuration.PRODUCTS_PAGE_URL;
 
-
+@Component
+@Scope("prototype")
 public class ProductsPage extends BasePage<ProductsPage> {
+
     @FindBy(css = "[href='/products']")
     private WebElement productsBtn;
     @FindBy(id = "sale_image")
@@ -23,16 +26,7 @@ public class ProductsPage extends BasePage<ProductsPage> {
     private WebElement itemsNamesProductsPage;
 
     @Autowired
-    private CustomWebDriver customWebDriver;
-
-    @Autowired
     private CustomWebElement customWebElement;
-
-
-    public ProductsPage() {
-        super();
-        PageFactory.initElements(customWebDriver.getDriver(), this);
-    }
 
     @Override
     protected String getPageUrl() {
