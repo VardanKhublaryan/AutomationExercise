@@ -17,38 +17,24 @@ import java.util.Map;
 import static com.AutomationExercise.utils.Configuration.REMOTE_RUN;
 
 @Configuration
-@Scope("prototype")
+@Scope("singleton")
 public class CustomWebDriver {
     public static ThreadLocal<WebDriver> threadLocal = new ThreadLocal<>();
 
-    public static void removeDriverThreadLocal() {
+    public void removeDriverThreadLocal() {
         threadLocal.remove();
     }
 
     public void setUp() throws MalformedURLException {
-//            case "chrome" -> {
-        WebDriver driver;
-        ChromeOptions options = getChromeOptions();
-        if (REMOTE_RUN) {
-            driver = new RemoteWebDriver(new URL("http://192.168.1.137:4444"), options);
+        if (threadLocal.get() == null) {
+            WebDriver driver;
+            ChromeOptions options = getChromeOptions();
+            if (REMOTE_RUN) {
+                driver = new RemoteWebDriver(new URL("http://192.168.1.137:4444"), options);
+                threadLocal.set(driver);
+            } else driver = new ChromeDriver(options);
             threadLocal.set(driver);
-        } else driver = new ChromeDriver(options);
-        threadLocal.set(driver);
-//
-////            case "safari" -> {
-////                SafariOptions safariOptions = new SafariOptions();
-////                CustomWebDriver.threadLocal.set(new SafariDriver(safariOptions));
-////            }
-////            case "firefox" -> {
-////                final DesiredCapabilities capabilities = new DesiredCapabilities();
-////                capabilities.setPlatform(Platform.WIN11);
-////                capabilities.setBrowserName("firefox");
-////
-////                RemoteWebDriver driver = new RemoteWebDriver(new URL("http://192.168.1.137:4444"), capabilities);
-////                CustomWebDriver.threadLocal.set(driver);
-////            }
-////            default -> CustomWebElement.printInfo("WRONG BROWSER NAME");
-//        }
+        }
     }
 
     private static ChromeOptions getChromeOptions() {

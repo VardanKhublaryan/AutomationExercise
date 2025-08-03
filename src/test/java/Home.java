@@ -1,13 +1,11 @@
 import com.AutomationExercise.SpringApp;
 import com.AutomationExercise.pages.HomePage;
+import com.AutomationExercise.pages.components.Header;
 import com.AutomationExercise.utils.CustomWebDriver;
 import com.AutomationExercise.utils.JavascriptHelper;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -25,6 +23,9 @@ public class Home extends BaseTest {
     @Autowired
     private JavascriptHelper jsHelper;
 
+    @Autowired
+    private Header header;
+
     @Test
     public void pageScroll() {
         SoftAssert softAssert = new SoftAssert();
@@ -40,19 +41,19 @@ public class Home extends BaseTest {
 
     @Test
     public void goToProductsFromHeader() {
-        homePage.getHeader().clickProductsBtn();
+        header.clickProductsBtn();
         Assert.assertEquals(custgetDriver.getDriver().getCurrentUrl(), PRODUCTS_PAGE_URL);
     }
 
     @Test
     public void goToCartFromHeader() {
-        homePage.getHeader().clickCartButton();
+        header.clickCartButton();
         Assert.assertEquals(custgetDriver.getDriver().getCurrentUrl(), CART_PAGE_URL);
     }
 
     @Test
     public void goToCSignupLoginFromHeader() {
-        homePage.getHeader().clickSignupLoginBtn();
+        header.clickSignupLoginBtn();
         Assert.assertEquals(custgetDriver.getDriver().getCurrentUrl(), REGISTER_LOGIN_URL);
     }
 }

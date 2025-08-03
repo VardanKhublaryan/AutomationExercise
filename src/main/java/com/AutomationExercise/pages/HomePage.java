@@ -46,6 +46,7 @@ public class HomePage extends BasePage<HomePage> {
     public HomePage() {
         super();
     }
+
     @PostConstruct
     public void initPage() {
         PageFactory.initElements(customWebDriver.getDriver(), this);

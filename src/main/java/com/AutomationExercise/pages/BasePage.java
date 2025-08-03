@@ -19,7 +19,6 @@ public abstract class BasePage<T extends LoadableComponent<T>> extends LoadableC
     private Header header;
 
     BasePage() {
-//        header = new Header(customWebDriver.getDriver());
     }
 
     protected abstract String getPageUrl();
@@ -49,9 +48,5 @@ public abstract class BasePage<T extends LoadableComponent<T>> extends LoadableC
     @Override
     protected void isLoaded() throws Error {
         waitHelper.pageToBeLoaded();
-    }
-
-    public Header getHeader() {
-        return header;
     }
 }
