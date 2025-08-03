@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import static com.AutomationExercise.constants.UserDetails.*;
-import static com.AutomationExercise.utils.CustomWebDriver.getDriver;
 
 public class RegistrationLogin extends BaseTest {
     SoftAssert softAssert;

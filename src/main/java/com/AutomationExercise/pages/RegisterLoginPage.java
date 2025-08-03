@@ -4,9 +4,11 @@ package com.AutomationExercise.pages;
 //import org.apache.commons.lang3.RandomStringUtils;
 
 import com.AutomationExercise.utils.CustomWebDriver;
+import com.AutomationExercise.utils.CustomWebElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -86,9 +88,16 @@ public class RegisterLoginPage extends BasePage<RegisterLoginPage> {
     @FindBy(css = "[data-qa='login-button']")
     private WebElement loginButton;
 
+    @Autowired
+    private CustomWebDriver customWebDriver;
+
+    @Autowired
+    private CustomWebElement customWebElement;
+
+
     public RegisterLoginPage() {
-        super(CustomWebDriver.getDriver());
-        PageFactory.initElements(CustomWebDriver.getDriver(), this);
+        super();
+        PageFactory.initElements(customWebDriver.getDriver(), this);
     }
 
     @Override
@@ -111,18 +120,18 @@ public class RegisterLoginPage extends BasePage<RegisterLoginPage> {
     public void isLoaded() throws Error {
         super.isLoaded();
         try {
-            isDisplayed(signupText);
+            customWebElement.isDisplayed(signupText);
         } catch (Exception e) {
             throw new Error("LoginPage is not loaded");
         }
     }
 
     public void clickOnSignupLoginBtn() {
-        click(signupLoginButton);
+        customWebElement.click(signupLoginButton);
     }
 
     public String getSignUpText() {
-        return getText(signupText);
+        return customWebElement.getText(signupText);
     }
 
     public String randomEmail() {
@@ -130,42 +139,42 @@ public class RegisterLoginPage extends BasePage<RegisterLoginPage> {
     }
 
     public void sinUp(String name, String email) {
-        fill(nameField, name);
-        fill(emailField, email);
-        click(submitBtn);
+        customWebElement.fill(nameField, name);
+        customWebElement.fill(emailField, email);
+        customWebElement.click(submitBtn);
     }
 
     public void fillAddressInfo(String firstName, String lastName, String company, String address, String address2,
                                 String state, String city, String zipcode, String mobileNumber) {
         List<String> countries = new ArrayList<>(Arrays.asList("India", "United States", "Canada", "Australia", "Israel", "New Zealand", "Singapore"));
         Random randomCountry = new Random();
-        fill(this.firstName, firstName);
-        fill(this.lastName, lastName);
-        fill(this.company, company);
-        fill(address1, address);
-        fill(this.address2, address2);
-        select(country, countries.get(randomCountry.nextInt(0, countries.size() - 1)));
-        fill(this.state, state);
-        fill(this.city, city);
-        fill(this.zipcode, zipcode);
-        fill(this.mobile_number, mobileNumber);
-        click(createAccountBtn);
+        customWebElement.fill(this.firstName, firstName);
+        customWebElement.fill(this.lastName, lastName);
+        customWebElement.fill(this.company, company);
+        customWebElement.fill(address1, address);
+        customWebElement.fill(this.address2, address2);
+        customWebElement.select(country, countries.get(randomCountry.nextInt(0, countries.size() - 1)));
+        customWebElement.fill(this.state, state);
+        customWebElement.fill(this.city, city);
+        customWebElement.fill(this.zipcode, zipcode);
+        customWebElement.fill(this.mobile_number, mobileNumber);
+        customWebElement.click(createAccountBtn);
     }
 
-    public static List<WebElement> filterList(List<WebElement> list) {
+    public  List<WebElement> filterList(List<WebElement> list) {
         return list.stream()
-                .filter(element -> getText(element).matches(".*\\d$"))
+                .filter(element -> customWebElement.getText(element).matches(".*\\d$"))
                 .collect(Collectors.toList());
     }
 
     public void clickOnContinueBtn() {
-        click(continueButton);
+        customWebElement.click(continueButton);
     }
 
     public void fillAccountInfo(String name, String password) {
-        click(titleBtn);
-        fill(signupNameField, name);
-        fill(signupPassField, password);
+        customWebElement.click(titleBtn);
+        customWebElement.fill(signupNameField, name);
+        customWebElement.fill(signupPassField, password);
 
         Random random = new Random();
         int day = random.nextInt(1, 10);
@@ -173,36 +182,36 @@ public class RegisterLoginPage extends BasePage<RegisterLoginPage> {
 
         String months = Integer.toString(random.nextInt(1, 12));
         String years = Integer.toString(random.nextInt(1997, 2002));
-        select(uniformDays, days);
-        select(uniformMonths, months);
-        select(uniformYears, years);
-        click(newsLetterRadioBtn);
-        click(specialOffers);
+        customWebElement.select(uniformDays, days);
+        customWebElement.select(uniformMonths, months);
+        customWebElement.select(uniformYears, years);
+        customWebElement.click(newsLetterRadioBtn);
+        customWebElement.click(specialOffers);
     }
 
     public String getAccountInfoText() {
-        return getText(accountInfoText);
+        return customWebElement.getText(accountInfoText);
     }
 
     public String getAccountCreatedText() {
-        return getText(accountCreatedText);
+        return customWebElement.getText(accountCreatedText);
     }
 
     public String getLoggedUserText() {
-        return getText(loggedInUserText);
+        return customWebElement.getText(loggedInUserText);
     }
 
     public void deleteAccount() {
-        click(deleteAccountBtn);
+        customWebElement.click(deleteAccountBtn);
     }
 
     public String getDeleteAccountText() {
-        return getText(deleteAccountText);
+        return customWebElement.getText(deleteAccountText);
     }
 
     public void login(String email, String pass) {
-        fill(loginEmailField, email);
-        fill(passwordField, pass);
-        click(loginButton);
+        customWebElement.fill(loginEmailField, email);
+        customWebElement.fill(passwordField, pass);
+        customWebElement.click(loginButton);
     }
 }

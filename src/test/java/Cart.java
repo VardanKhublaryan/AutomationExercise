@@ -2,21 +2,19 @@ import com.AutomationExercise.constants.UserDetails;
 import com.AutomationExercise.pages.CartPage;
 import com.AutomationExercise.pages.HomePage;
 import com.AutomationExercise.pages.RegisterLoginPage;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import com.AutomationExercise.utils.CustomWebDriver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.time.Duration;
-import java.util.Random;
-
-import static com.AutomationExercise.utils.CustomWebDriver.getDriver;
-
 public class Cart extends BaseTest {
+
+    @Autowired
+    private HomePage homePage;
+
+    @Autowired
+    private CustomWebDriver customWebDriver;
 
     @BeforeMethod
     public void goToCartPage() {
@@ -28,7 +26,6 @@ public class Cart extends BaseTest {
     @Test
     public void createOrder() {
         SoftAssert softAssert = new SoftAssert();
-        HomePage homePage = new HomePage();
         String itemName = homePage.getTextItemInHomePage(0);
         String itemPrice = homePage.getItemPrice(0);
         homePage.clickAddToCartButton();
@@ -45,7 +42,7 @@ public class Cart extends BaseTest {
         cartPage.clickPlaceOrderBtn();
         cartPage.payAndConfirm(UserDetails.CART_NAME.getValue(), UserDetails.CART_NUMBER.getValue(), UserDetails.CVC.getValue()
                 , UserDetails.CART_EXPIRATION_MONTH.getValue(), UserDetails.CART_EXPIRATION_YEAR.getValue());
-        getDriver().navigate().back();
+        customWebDriver.getDriver().navigate().back();
         softAssert.assertTrue(new CartPage().messageSuccessIsDisplayed());
         softAssert.assertAll();
     }

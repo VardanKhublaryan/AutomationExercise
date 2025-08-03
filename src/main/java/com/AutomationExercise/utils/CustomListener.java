@@ -1,5 +1,6 @@
 package com.AutomationExercise.utils;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -12,11 +13,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import static com.AutomationExercise.utils.CustomWebDriver.getDriver;
 
 public class CustomListener implements ITestListener {
     private int fileNum = 1;
-
+    @Autowired
+    private CustomWebDriver customWebDriver;
 
     @Override
     public void onTestStart(ITestResult result) {
@@ -34,7 +35,7 @@ public class CustomListener implements ITestListener {
 
         Screenshot screenshot1;
         screenshot1 = new AShot().coordsProvider(new WebDriverCoordsProvider()).
-                takeScreenshot(getDriver());
+                takeScreenshot(customWebDriver.getDriver());
         BufferedImage randomImageItem1 = screenshot1.getImage();
         File file = new File("ScreenShots" + "bug" + fileNum + ".png");
         try {

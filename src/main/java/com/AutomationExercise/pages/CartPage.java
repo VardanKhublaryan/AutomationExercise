@@ -1,10 +1,12 @@
 package com.AutomationExercise.pages;
 
 import com.AutomationExercise.utils.CustomWebDriver;
+import com.AutomationExercise.utils.CustomWebElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -47,9 +49,15 @@ public class CartPage extends BasePage<CartPage> {
     @FindBy(css = "[href='/view_cart']")
     private List<WebElement> viewCart;
 
+    @Autowired
+    private CustomWebDriver customWebDriver;
+
+    @Autowired
+    private CustomWebElement customWebElement;
+
     public CartPage() {
-        super(CustomWebDriver.getDriver());
-        PageFactory.initElements(CustomWebDriver.getDriver(), this);
+        super();
+        PageFactory.initElements(customWebDriver.getDriver(), this);
     }
 
     @Override
@@ -72,63 +80,63 @@ public class CartPage extends BasePage<CartPage> {
     protected void isLoaded() throws Error {
         super.isLoaded();
         try {
-            isDisplayed(proceedToCheckout);
+            customWebElement.isDisplayed(proceedToCheckout);
         } catch (Exception e) {
             throw new Error("CartPage is not loaded");
         }
     }
 
     public void clickViewCartButton() {
-        click(viewCart.get(1));
+        customWebElement.click(viewCart.get(1));
     }
 
     public void clickProceedToCheckout() {
-        click(proceedToCheckout);
+        customWebElement.click(proceedToCheckout);
     }
 
     public String getItemNameInCartPage() {
-        return getText(itemNameInCartPage.get(itemNameInCartPage.size() - 1));
+        return customWebElement.getText(itemNameInCartPage.get(itemNameInCartPage.size() - 1));
     }
 
     public String getItemPriceInCartPage() {
-        return getText(itemPriceInCartPage.get(itemPriceInCartPage.size() - 1));
+        return customWebElement.getText(itemPriceInCartPage.get(itemPriceInCartPage.size() - 1));
     }
 
     public String getUserLastName() {
-        return getText(userLastName).substring(2);
+        return customWebElement.getText(userLastName).substring(2);
     }
 
     public String getUserCompany() {
-        return getText(userCompany);
+        return customWebElement.getText(userCompany);
     }
 
     public String getUserCountry() {
-        return getText(country);
+        return customWebElement.getText(country);
     }
 
     public String getUserPhoneNumber() {
-        return getText(phoneNumber);
+        return customWebElement.getText(phoneNumber);
     }
 
     public void fillCommentField(String comment) {
-        fill(commentField, comment);
+        customWebElement.fill(commentField, comment);
     }
 
     public void clickPlaceOrderBtn() {
-        click(placeOrderButton);
+        customWebElement.click(placeOrderButton);
     }
 
     public void payAndConfirm(String nameOnCart, String numberOfCart, String userCvc, String expirationM, String expirationY) {
-        fill(nameOnCartField, numberOfCart);
-        fill(cartNumber, nameOnCart);
-        fill(expirationMonth, expirationM);
-        fill(cvc, userCvc);
-        fill(expirationYear, expirationY);
-        click(payButton);
+        customWebElement.fill(nameOnCartField, numberOfCart);
+        customWebElement.fill(cartNumber, nameOnCart);
+        customWebElement.fill(expirationMonth, expirationM);
+        customWebElement.fill(cvc, userCvc);
+        customWebElement.fill(expirationYear, expirationY);
+        customWebElement.click(payButton);
     }
 
     public boolean messageSuccessIsDisplayed() {
-        return isDisplayed(messageSuccesses);
+        return customWebElement.isDisplayed(messageSuccesses);
     }
 
 }

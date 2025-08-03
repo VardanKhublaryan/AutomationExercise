@@ -1,23 +1,38 @@
+import com.AutomationExercise.SpringApp;
 import com.AutomationExercise.pages.HomePage;
+import com.AutomationExercise.utils.CustomWebDriver;
 import com.AutomationExercise.utils.JavascriptHelper;
+import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import static com.AutomationExercise.utils.Configuration.*;
-import static com.AutomationExercise.utils.CustomWebDriver.getDriver;
 
-
+@SpringBootTest(classes = SpringApp.class)
 public class Home extends BaseTest {
+
+    @Autowired
+    private HomePage homePage;
+
+    @Autowired
+    private CustomWebDriver custgetDriver;
+
+    @Autowired
+    private JavascriptHelper jsHelper;
+
     @Test
     public void pageScroll() {
         SoftAssert softAssert = new SoftAssert();
-        HomePage homePage = new HomePage();
-        JavascriptHelper.scrollDown();
-        long scrollDownPosition = JavascriptHelper.getScrollPosition();
+        jsHelper.scrollDown();
+        long scrollDownPosition = jsHelper.getScrollPosition();
         homePage.clickScrollUpBtn();
         softAssert.assertTrue(homePage.subscriptionIsDisplayed());
-        long scrollUpPosition = JavascriptHelper.getScrollPosition();
+        long scrollUpPosition = jsHelper.getScrollPosition();
         softAssert.assertTrue(scrollUpPosition < scrollDownPosition, "Page Is Not scrolled");
         softAssert.assertTrue(homePage.verifySlide());
         softAssert.assertAll();
@@ -25,19 +40,19 @@ public class Home extends BaseTest {
 
     @Test
     public void goToProductsFromHeader() {
-        new HomePage().getHeader().clickProductsBtn();
-        Assert.assertEquals(getDriver().getCurrentUrl(), PRODUCTS_PAGE_URL);
+        homePage.getHeader().clickProductsBtn();
+        Assert.assertEquals(custgetDriver.getDriver().getCurrentUrl(), PRODUCTS_PAGE_URL);
     }
 
     @Test
     public void goToCartFromHeader() {
-        new HomePage().getHeader().clickCartButton();
-        Assert.assertEquals(getDriver().getCurrentUrl(), CART_PAGE_URL);
+        homePage.getHeader().clickCartButton();
+        Assert.assertEquals(custgetDriver.getDriver().getCurrentUrl(), CART_PAGE_URL);
     }
 
     @Test
     public void goToCSignupLoginFromHeader() {
-        new HomePage().getHeader().clickSignupLoginBtn();
-        Assert.assertEquals(getDriver().getCurrentUrl(), REGISTER_LOGIN_URL);
+        homePage.getHeader().clickSignupLoginBtn();
+        Assert.assertEquals(custgetDriver.getDriver().getCurrentUrl(), REGISTER_LOGIN_URL);
     }
 }
