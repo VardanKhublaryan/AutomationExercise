@@ -1,25 +1,30 @@
+import com.AutomationExercise.SpringApp;
 import com.AutomationExercise.constants.UserDetails;
 import com.AutomationExercise.pages.RegisterLoginPage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import static com.AutomationExercise.constants.UserDetails.*;
-import static com.AutomationExercise.utils.CustomWebDriver.getDriver;
 
+@SpringBootTest(classes = SpringApp.class)
 public class RegistrationLogin extends BaseTest {
-    SoftAssert softAssert;
 
-    @BeforeMethod
+    private SoftAssert softAssert;
+
+    @Autowired
+    private RegisterLoginPage registerPage;
+
+    @BeforeClass
     public void goToLoginPage() {
-        RegisterLoginPage registerPage = new RegisterLoginPage();
         registerPage.open();
     }
 
     @Test
     public void validSignUp() {
-        RegisterLoginPage registerPage = new RegisterLoginPage();
         softAssert = new SoftAssert();
         softAssert.assertEquals(registerPage.getSignUpText(), "New User Signup!");
         registerPage.sinUp(NAME.getValue(), registerPage.randomEmail());
@@ -36,10 +41,10 @@ public class RegistrationLogin extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test
+    @Test(dependsOnMethods = "validSignUp")
     public void validLogin() {
-        RegisterLoginPage loginPage = new RegisterLoginPage();
-        loginPage.login(UserDetails.EMAIL.getValue(), UserDetails.PASSWORD.getValue());
-        Assert.assertTrue(loginPage.getLoggedUserText().contains("Logged in as " + NAME.getValue()));
+        registerPage.login(UserDetails.EMAIL.getValue(), UserDetails.PASSWORD.getValue());
+        Assert.assertTrue(registerPage.getLoggedUserText().contains("Logged in as " + NAME.getValue()));
+        registerPage.deleteCookies();
     }
 }

@@ -1,14 +1,19 @@
 package com.AutomationExercise.pages.components;
 
-import org.openqa.selenium.WebDriver;
+import com.AutomationExercise.utils.CustomWebDriver;
+import com.AutomationExercise.utils.CustomWebElement;
+import jakarta.annotation.PostConstruct;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-import static com.AutomationExercise.utils.CustomWebElement.click;
-
+@Component
+@Scope("prototype")
 public class Header {
-    WebDriver driver;
+
     @FindBy(css = "[href='/products']")
     private WebElement productsButton;
     @FindBy(css = "[href='/view_cart']")
@@ -16,20 +21,23 @@ public class Header {
     @FindBy(css = "[href='/login']")
     private WebElement signupLoginBtn;
 
-    public Header(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+    @Autowired
+    private CustomWebElement customWebElement;
+
+    @PostConstruct
+    public void initPage() {
+        PageFactory.initElements(CustomWebDriver.getDriver(), this);
     }
 
     public void clickProductsBtn() {
-        click(productsButton);
+        customWebElement.click(productsButton);
     }
 
     public void clickCartButton() {
-        click(cartButton);
+        customWebElement.click(cartButton);
     }
 
     public void clickSignupLoginBtn() {
-        click(signupLoginBtn);
+        customWebElement.click(signupLoginBtn);
     }
 }

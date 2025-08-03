@@ -1,17 +1,22 @@
 package com.AutomationExercise.utils;
 
+import org.checkerframework.checker.units.qual.A;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-import static com.AutomationExercise.utils.WaitHelper.*;
-
-
+@Component
+@Scope("prototype")
 public class CustomWebElement {
 
+    @Autowired
+    private WaitHelper waitHelper;
 
-    public static boolean isDisplayed(WebElement element) {
+    public  boolean isDisplayed(WebElement element) {
         try {
-            waitUntilElementIsDisplayed(element);
+            waitHelper.waitUntilElementIsDisplayed(element);
             return element.isDisplayed();
         } catch (Exception e) {
             e.printStackTrace();
@@ -19,10 +24,9 @@ public class CustomWebElement {
         return false;
     }
 
-
-    public static boolean isDisabled(WebElement element) {
+    public  boolean isDisabled(WebElement element) {
         try {
-            waitUntilElementClickable(element);
+            waitHelper.waitUntilElementClickable(element);
             return !element.isEnabled();
         } catch (Exception e) {
             e.printStackTrace();
@@ -30,9 +34,9 @@ public class CustomWebElement {
         return false;
     }
 
-    public static boolean isEnabled(WebElement element) {
+    public  boolean isEnabled(WebElement element) {
         try {
-            waitUntilElementClickable(element);
+            waitHelper.waitUntilElementClickable(element);
             return element.isEnabled();
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,10 +44,10 @@ public class CustomWebElement {
         return false;
     }
 
-    public static void click(WebElement element) {
+    public  void click(WebElement element) {
         if (isDisplayed(element)) {
             try {
-                waitUntilElementClickable(element);
+               waitHelper. waitUntilElementClickable(element);
                 element.click();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -51,7 +55,7 @@ public class CustomWebElement {
         }
     }
 
-    public static void submit(WebElement element) {
+    public  void submit(WebElement element) {
         isDisplayed(element);
         try {
             element.submit();
@@ -60,7 +64,7 @@ public class CustomWebElement {
         }
     }
 
-    public static void select(WebElement element, String index) {
+    public  void select(WebElement element, String index) {
         isDisplayed(element);
         try {
             Select select = new Select(element);
@@ -70,18 +74,18 @@ public class CustomWebElement {
         }
     }
 
-    public static void fill(WebElement element, String field) {
+    public  void fill(WebElement element, String field) {
         isDisplayed(element);
         element.clear();
         element.sendKeys(field);
     }
 
-    public static String getText(WebElement element) {
-        waitUntilVisibilityOfText(element);
+    public  String getText(WebElement element) {
+        waitHelper.waitUntilVisibilityOfText(element);
         return element.getText();
     }
 
-    public static String getAttribute(WebElement element, String attributeName) {
+    public  String getAttribute(WebElement element, String attributeName) {
         if (isDisplayed(element)) {
             return element.getAttribute(attributeName);
         }

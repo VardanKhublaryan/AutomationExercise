@@ -1,34 +1,40 @@
 package com.AutomationExercise.utils;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 
-import static com.AutomationExercise.utils.CustomExpectedCondition.waitForJQueryToLoad;
-import static com.AutomationExercise.utils.CustomExpectedCondition.waitForJStoLoad;
-import static com.AutomationExercise.utils.CustomWebDriver.getDriver;
-
+@Component
+@Scope("prototype")
 public class WaitHelper {
+
     public static final int TIME_OUT = 7;
-    static WebDriverWait wait;
+    private WebDriverWait wait;
 
-    static void wait(ExpectedCondition<Boolean> expectedCondition) throws WebDriverException {
-        new WebDriverWait(getDriver(), Duration.ofSeconds(TIME_OUT)).until(expectedCondition);
+    @Autowired
+    private CustomExpectedCondition expectedCondition;
+
+     void wait(ExpectedCondition<Boolean> expectedCondition) throws WebDriverException {
+        new WebDriverWait(CustomWebDriver.getDriver(), Duration.ofSeconds(TIME_OUT)).until(expectedCondition);
     }
 
-    public static void waitUntilJQueryIsLoaded() {
-        wait(waitForJQueryToLoad());
+    public  void waitUntilJQueryIsLoaded() {
+        wait(expectedCondition.waitForJQueryToLoad());
     }
 
-    public static void waitUntilJSisLoaded() {
-        wait(waitForJStoLoad());
+    public void waitUntilJSisLoaded() {
+        wait(expectedCondition.waitForJStoLoad());
     }
 
-    public static void pageToBeLoaded() {
+    public void pageToBeLoaded() {
         try {
             waitUntilJSisLoaded();
         } catch (WebDriverException e) {
@@ -37,15 +43,15 @@ public class WaitHelper {
         }
     }
 
-    public static void waitUntilVisibilityOfText(WebElement element) {
+    public void waitUntilVisibilityOfText(WebElement element) {
         try {
-            wait(CustomExpectedCondition.textToBeVisibility(element));
+            wait(expectedCondition.textToBeVisibility(element));
         } catch (Exception e) {
             CustomListener.log(e.toString());
         }
     }
 
-    public static void waitUntilVisibilityTextOfElement(WebElement element, String text) {
+    public void waitUntilVisibilityTextOfElement(WebElement element, String text) {
         try {
             wait(ExpectedConditions.textToBePresentInElement(element, text));
         } catch (Exception e) {
@@ -53,23 +59,23 @@ public class WaitHelper {
         }
     }
 
-    public static void elementToBeVisible(WebElement element) {
+    public void elementToBeVisible(WebElement element) {
         try {
-            new WebDriverWait(getDriver(), Duration.ofSeconds(TIME_OUT)).until(ExpectedConditions.visibilityOf(element));
+            new WebDriverWait(CustomWebDriver.getDriver(), Duration.ofSeconds(TIME_OUT)).until(ExpectedConditions.visibilityOf(element));
         } catch (WebDriverException e) {
             CustomListener.log(e.toString());
             throw new WebDriverException("Element by " + element + " selector should not be visible");
         }
     }
 
-    public static void waitUntilElementClickable(WebElement element) {
-        wait = new WebDriverWait(getDriver(), Duration.ofSeconds(TIME_OUT));
+    public void waitUntilElementClickable(WebElement element) {
+        wait = new WebDriverWait(CustomWebDriver.getDriver(), Duration.ofSeconds(TIME_OUT));
         elementToBeVisible(element);
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
-    public static void waitUntilElementIsDisplayed(WebElement element) {
-        new WebDriverWait(getDriver(), Duration.ofSeconds(TIME_OUT)).until(ExpectedConditions.visibilityOf(element));
+    public void waitUntilElementIsDisplayed(WebElement element) {
+        new WebDriverWait(CustomWebDriver.getDriver(), Duration.ofSeconds(TIME_OUT)).until(ExpectedConditions.visibilityOf(element));
     }
 
 }

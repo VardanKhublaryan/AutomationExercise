@@ -1,16 +1,19 @@
 package com.AutomationExercise.pages;
 
-import com.AutomationExercise.utils.CustomWebDriver;
+import com.AutomationExercise.utils.CustomWebElement;
 import com.AutomationExercise.utils.JavascriptHelper;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 import static com.AutomationExercise.utils.Configuration.HOME_URL;
-import static com.AutomationExercise.utils.CustomWebElement.*;
 
+@Component
+@Scope("prototype")
 public class HomePage extends BasePage<HomePage> {
 
     @FindBy(css = "[href='/']")
@@ -28,10 +31,12 @@ public class HomePage extends BasePage<HomePage> {
     @FindBy(css = "[class='item active']")
     private WebElement carouselLinerSlide;
 
-    public HomePage() {
-        super(CustomWebDriver.getDriver());
-        PageFactory.initElements(CustomWebDriver.getDriver(), this);
-    }
+
+    @Autowired
+    private CustomWebElement customWebElement;
+
+    @Autowired
+    private JavascriptHelper javascriptHelper;
 
     @Override
     protected String getPageUrl() {
@@ -52,18 +57,18 @@ public class HomePage extends BasePage<HomePage> {
     public void isLoaded() throws Error {
         super.isLoaded();
         try {
-            isDisplayed(homePageIcon);
+            customWebElement.isDisplayed(homePageIcon);
         } catch (Exception e) {
             throw new Error("HomePage is not loaded");
         }
     }
 
     public String getTextItemInHomePage(int itemIndex) {
-        return getText(itemsNamesInHomePage.get(itemIndex));
+        return customWebElement.getText(itemsNamesInHomePage.get(itemIndex));
     }
 
     public String getItemPrice(int index) {
-        return getText(itemsPriceInHomePage.get(index));
+        return customWebElement.getText(itemsPriceInHomePage.get(index));
     }
 
     public int getItemNamesSize() {
@@ -71,20 +76,20 @@ public class HomePage extends BasePage<HomePage> {
     }
 
     public void clickAddToCartButton() {
-        JavascriptHelper.scrollDown();
-        click(addToCartBtn);
+        javascriptHelper.scrollDown();
+        customWebElement.click(addToCartBtn);
     }
 
     public boolean subscriptionIsDisplayed() {
-        return isDisplayed(subscription);
+        return customWebElement.isDisplayed(subscription);
     }
 
     public void clickScrollUpBtn() {
-        click(scrollUpButton);
+        customWebElement.click(scrollUpButton);
     }
 
     public boolean verifySlide() {
-        return getText(carouselLinerSlide).contains("Fledged practice website for Automation Engineers");
+        return customWebElement.getText(carouselLinerSlide).contains("Fledged practice website for Automation Engineers");
     }
 }
 

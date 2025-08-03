@@ -3,17 +3,21 @@ package com.AutomationExercise.pages;
 import com.AutomationExercise.pages.components.Header;
 import com.AutomationExercise.utils.CustomWebDriver;
 import com.AutomationExercise.utils.WaitHelper;
-import org.openqa.selenium.WebDriver;
+import jakarta.annotation.PostConstruct;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class BasePage<T extends LoadableComponent<T>> extends LoadableComponent<T> {
-    private final WebDriver driver;
-    private final Header header;
 
-    BasePage(WebDriver driver) {
-        this.driver = driver;
-        header = new Header(driver);
+    @Autowired
+    private WaitHelper waitHelper;
+
+    private Header header;
+
+    @PostConstruct
+    public void initPage() {
+        PageFactory.initElements(CustomWebDriver.getDriver(), this);
     }
 
     protected abstract String getPageUrl();
@@ -37,15 +41,11 @@ public abstract class BasePage<T extends LoadableComponent<T>> extends LoadableC
 
     @Override
     protected void load() {
-        driver.get(getPageUrl());
+        CustomWebDriver.getDriver().get(getPageUrl());
     }
 
     @Override
     protected void isLoaded() throws Error {
-        WaitHelper.pageToBeLoaded();
-    }
-
-    public Header getHeader() {
-        return header;
+        waitHelper.pageToBeLoaded();
     }
 }

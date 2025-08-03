@@ -1,29 +1,38 @@
+import com.AutomationExercise.SpringApp;
 import com.AutomationExercise.pages.HomePage;
 import com.AutomationExercise.pages.ProductsPage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.Random;
 
-import static com.AutomationExercise.utils.CustomWebDriver.getDriver;
-
+@SpringBootTest(classes = SpringApp.class)
 public class Products extends BaseTest {
-    String itemNameInHomePage;
+
+    private String itemNameInHomePage;
     int index;
 
-    @BeforeMethod
+    @Autowired
+    private HomePage homePage;
+
+    @Autowired
+    private ProductsPage productsPage;
+
+    @BeforeClass
     public void goToProductsPage() {
         Random random = new Random();
-        index = random.nextInt(0, new HomePage().getItemNamesSize());
-        itemNameInHomePage = new HomePage().getTextItemInHomePage(index);
-        new ProductsPage().open();
+        index = random.nextInt(0, homePage.getItemNamesSize());
+        itemNameInHomePage = homePage.getTextItemInHomePage(index);
+        productsPage.open();
     }
 
     @Test
     public void searchProduct() {
-        ProductsPage productsPage = new ProductsPage();
         productsPage.search(itemNameInHomePage);
         Assert.assertEquals(itemNameInHomePage, productsPage.getItemNameInProducts());
     }
+
 }
