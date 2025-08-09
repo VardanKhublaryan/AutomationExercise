@@ -22,11 +22,11 @@ public class WaitHelper {
     @Autowired
     private CustomExpectedCondition expectedCondition;
 
-     void wait(ExpectedCondition<Boolean> expectedCondition) throws WebDriverException {
+    void wait(ExpectedCondition<Boolean> expectedCondition) throws WebDriverException {
         new WebDriverWait(CustomWebDriver.getDriver(), Duration.ofSeconds(TIME_OUT)).until(expectedCondition);
     }
 
-    public  void waitUntilJQueryIsLoaded() {
+    public void waitUntilJQueryIsLoaded() {
         wait(expectedCondition.waitForJQueryToLoad());
     }
 

@@ -18,9 +18,6 @@ public class Home extends BaseTest {
     private HomePage homePage;
 
     @Autowired
-    private CustomWebDriver custgetDriver;
-
-    @Autowired
     private JavascriptHelper jsHelper;
 
     @Autowired
