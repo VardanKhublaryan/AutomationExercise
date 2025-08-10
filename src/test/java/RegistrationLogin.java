@@ -13,8 +13,6 @@ import static com.AutomationExercise.constants.UserDetails.*;
 @SpringBootTest(classes = SpringApp.class)
 public class RegistrationLogin extends BaseTest {
 
-    private SoftAssert softAssert;
-
     @Autowired
     private RegisterLoginPage registerPage;
 
@@ -25,7 +23,7 @@ public class RegistrationLogin extends BaseTest {
 
     @Test
     public void validSignUp() {
-        softAssert = new SoftAssert();
+        SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(registerPage.getSignUpText(), "New User Signup!");
         registerPage.sinUp(NAME.getValue(), registerPage.randomEmail());
         softAssert.assertEquals(registerPage.getAccountInfoText(), "ENTER ACCOUNT INFORMATION");

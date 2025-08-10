@@ -5,7 +5,6 @@
         <listener class-name="com.AutomationExercise.utils.CustomListener"/>
     </listeners>
 
-
     <test name="TestSuite" >
         <parameter name="browser" value="chrome"/>
         <classes>
